@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 // import ITimer from "../../App";
 
-const AddIngredient: React.SFC = props => {
+type AddIngredientProps = {
+  changeSteps: (sign: string) => void;
+};
+
+const AddIngredient = (props: AddIngredientProps) => {
   const [ingredient, setIngredient] = useState({});
+  const { changeSteps } = props;
 
   const setIng = (event: React.SyntheticEvent<HTMLInputElement>) => {
     setIngredient({ ingredient: event.currentTarget.value });
@@ -11,8 +16,9 @@ const AddIngredient: React.SFC = props => {
   const addIng = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(ingredient);
-    props.changeSteps();
+    changeSteps("+");
   };
+
   return (
     <div>
       <h1>Add Your Ingredients</h1>
@@ -20,6 +26,7 @@ const AddIngredient: React.SFC = props => {
         <input type="text" name="field" onChange={e => setIng(e)} />
         <label htmlFor="field">Type you ingredient Here</label>
       </form>
+      <button onClick={() => changeSteps("+")}>Next Step</button>
     </div>
   );
 };

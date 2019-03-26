@@ -19,10 +19,14 @@ interface IAppState {
 class App extends Component<IAppProps, IAppState> {
   state = { step: 1, timers: [] };
 
-  changeSteps = (): void => {
-    this.setState(state => ({
-      step: state.step + 1
-    }));
+  changeSteps = (sign: string): void => {
+    sign === "+"
+      ? this.setState(state => ({
+          step: state.step + 1
+        }))
+      : this.setState(state => ({
+          step: state.step - 1
+        }));
   };
 
   renderSteps = () => {
