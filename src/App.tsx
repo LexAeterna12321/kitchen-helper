@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState, useReducer } from "react";
 import AddIngredient from "./components/addIngredient";
 import AddTiming from "./components/addTiming";
 import TimersSummary from "./components/timersSummary";
