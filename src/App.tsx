@@ -1,60 +1,73 @@
-import React, { Component } from "react";
+import React, { useState, useReducer, useContext } from "react";
 import AddIngredient from "./components/addIngredient";
 import AddTiming from "./components/addTiming";
 import TimersSummary from "./components/timersSummary";
+import { appReducer, initialState } from "./store/appReducer";
 import "./App.css";
 
 export interface ITimer {
-  time: number;
+  time: string;
   ingredient: string;
   ingrImg: string;
+  id: string;
 }
 
-interface IAppProps {}
 interface IAppState {
   timers: ITimer[];
   step: number;
 }
+export interface IAction {
+  type: string;
+  payload: any;
+}
 
-class App extends Component<IAppProps, IAppState> {
-  state = { step: 1, timers: [] };
+export const Context = React.createContext({});
 
-  changeSteps = (sign: string): void => {
+const App = (): JSX.Element => {
+  const [store, dispatch] = useReducer(appReducer, initialState);
+  const [state, setState] = useState({ step: 1, timers: [] });
+  const { step } = state;
+  const changeSteps = (sign: string): void => {
     sign === "+"
-      ? this.setState(state => ({
-          step: state.step + 1
-        }))
-      : this.setState(state => ({
-          step: state.step - 1
-        }));
+      ? setState(
+          (state: IAppState): any => ({
+            step: step + 1
+          })
+        )
+      : setState(
+          (state: IAppState): any => ({
+            step: step - 1
+          })
+        );
   };
 
-  renderSteps = () => {
-    switch (this.state.step) {
+  const renderSteps = () => {
+    switch (step) {
       case 1: {
-        return <AddIngredient changeSteps={this.changeSteps} />;
+        return <AddIngredient changeSteps={changeSteps} />;
       }
       case 2: {
-        return <AddTiming changeSteps={this.changeSteps} />;
+        return <AddTiming changeSteps={changeSteps} />;
       }
       case 3: {
-        return <TimersSummary changeSteps={this.changeSteps} />;
+        return <TimersSummary changeSteps={changeSteps} />;
       }
     }
   };
-  render(): JSX.Element {
-    return (
+
+  console.log(store);
+  return (
+    <Context.Provider value={{ dispatch, store }}>
       <div className="App">
         <header className="App-header">
           <p>Kitchen Helper</p>
           <p>Precise Your Kitchen Timing </p>
+          <h2>Step {step}</h2>
+          {renderSteps()}
         </header>
-
-        <h2>Step {this.state.step}</h2>
-        {this.renderSteps()}
       </div>
-    );
-  }
-}
+    </Context.Provider>
+  );
+};
 
 export default App;

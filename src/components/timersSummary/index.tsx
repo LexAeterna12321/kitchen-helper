@@ -6,7 +6,7 @@ const TimersSummary = (props: TimersSummaryProps) => {
   const { changeSteps } = props;
   return (
     <div>
-      TimersSummary
+      <h1>TimersSummary</h1>
       <button onClick={() => changeSteps("-")}>Prev Step</button>
       <button onClick={() => changeSteps("+")}>Let's Cook</button>
     </div>

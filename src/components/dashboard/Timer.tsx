@@ -1,7 +1,7 @@
 import React from "react";
 
-const Timer: React.SFC = () => {
-  return <div>Timer</div>;
+const Timer = ({ ingredient }: any) => {
+  return <li>{ingredient}</li>;
 };
 
 export default Timer;
