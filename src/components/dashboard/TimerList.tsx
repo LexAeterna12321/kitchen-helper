@@ -6,8 +6,15 @@ const TimerList: React.SFC = () => {
   return (
     <ul>
       {store.timers.map((timer: any) => {
-        const { ingredient, id } = timer;
-        return <Timer key={id} ingredient={ingredient} />;
+        const { ingredient, id, time, ingrImg } = timer;
+        return (
+          <Timer
+            key={id}
+            ingredient={ingredient}
+            time={time}
+            ingrImg={ingrImg}
+          />
+        );
       })}
     </ul>
   );

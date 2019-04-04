@@ -7,7 +7,7 @@ import "./App.css";
 
 export interface ITimer {
   time: string;
-  ingredient: string;
+  ingrName: string;
   ingrImg: string;
   id: string;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../App";
 import Timer from "../dashboard/Timer";
 
@@ -25,8 +25,6 @@ const AddTiming = (props: AddTimingProps) => {
       }
       return t;
     });
-
-    setTime({ timeValue: "" });
 
     dispatch({ type: "ADD_TIME", payload: updatedTimers });
   };
