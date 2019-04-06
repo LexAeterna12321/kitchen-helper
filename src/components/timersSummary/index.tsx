@@ -1,5 +1,7 @@
 import React from "react";
 import TimerList from "../dashboard/TimerList";
+import { button } from "../addTiming/index";
+
 type TimersSummaryProps = {
   changeSteps: (sign: string) => void;
 };
@@ -9,8 +11,12 @@ const TimersSummary = (props: TimersSummaryProps) => {
     <div>
       <h1>TimersSummary</h1>
       <TimerList />
-      <button onClick={() => changeSteps("-")}>Prev Step</button>
-      <button onClick={() => changeSteps("+")}>Let's Cook</button>
+      <button className={button} onClick={() => changeSteps("-")}>
+        Prev Step
+      </button>
+      <button className={button} onClick={() => changeSteps("+")}>
+        Let's Cook
+      </button>
     </div>
   );
 };

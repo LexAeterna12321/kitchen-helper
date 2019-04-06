@@ -2,6 +2,7 @@ import React, { useState, useReducer } from "react";
 import AddIngredient from "./components/addIngredient";
 import AddTiming from "./components/addTiming";
 import TimersSummary from "./components/timersSummary";
+import Dashboard from "./components/dashboard";
 import { appReducer, initialState } from "./store/appReducer";
 import "./App.css";
 
@@ -52,10 +53,15 @@ const App = (): JSX.Element => {
       case 3: {
         return <TimersSummary changeSteps={changeSteps} />;
       }
+      case 4: {
+        return <Dashboard />;
+      }
+      default: {
+        return <AddIngredient changeSteps={changeSteps} />;
+      }
     }
   };
 
-  console.log(store);
   return (
     <Context.Provider value={{ dispatch, store }}>
       <div className="App">
@@ -63,8 +69,8 @@ const App = (): JSX.Element => {
           <p>Kitchen Helper</p>
           <p>Precise Your Kitchen Timing </p>
           <h2>Step {step}</h2>
-          {renderSteps()}
         </header>
+        {renderSteps()}
       </div>
     </Context.Provider>
   );
