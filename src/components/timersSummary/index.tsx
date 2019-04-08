@@ -8,7 +8,7 @@ type TimersSummaryProps = {
 const TimersSummary = (props: TimersSummaryProps) => {
   const { changeSteps } = props;
   return (
-    <div>
+    <div style={{ margin: "0 auto" }}>
       <h1>TimersSummary</h1>
       <TimerList />
       <button className={button} onClick={() => changeSteps("-")}>

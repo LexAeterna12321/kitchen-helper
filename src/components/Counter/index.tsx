@@ -1,36 +1,61 @@
 import React, { useEffect, useState } from "react";
 const Timer = require("tiny-timer").default;
-import { style } from "typestyle";
-const Counter = ({ time }: any): JSX.Element => {
-  const [currTime, setCurrTime] = useState(time);
-  const [duration, setDuration] = useState(0);
-  let timer = new Timer();
-  useEffect(() => {
-    timer.start(time * 1000, [10]);
 
+import { style } from "typestyle";
+
+const Counter = ({
+  time,
+  color,
+  ingrName
+}: {
+  time: number;
+  color: string;
+  ingrName: string;
+}): JSX.Element => {
+  const [timerStatus, setTimerStatus] = useState("");
+  const [currTime, setCurrTime] = useState(0);
+  const timer = new Timer();
+
+  useEffect(() => {
+    // Timer handler
+
+    timer.start(time * 1000, [1000]);
     timer.on("tick", (ms: number) => {
       setCurrTime(timer.time);
-      let d = (10000 / timer.time) * 100;
-      // console.log(Math.trunc(d));
-      setDuration(Math.trunc(d));
+    });
+    timer.on("done", () => {
+      setTimerStatus("DONE!");
     });
   }, []);
 
+  const colorIndicator = style({
+    margin: "0 10px",
+    background: color,
+    width: "15px",
+    height: "10px"
+  });
+
   return (
-    <>
-      <p>{Number(currTime / 1000).toFixed(2)}</p>
-      <div
-        className={bar}
-        style={{ width: `${duration > 100 ? 100 : duration}%` }}
-      />
-    </>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "3fr 1fr",
+        gridGap: "15px",
+        alignItems: "center"
+      }}
+    >
+      <p
+        style={{
+          color: color,
+          justifySelf: "flex-start",
+          fontSize: "0.7rem"
+        }}
+      >
+        {ingrName} : {!timerStatus ? (currTime / 1000).toFixed(0) : timerStatus}
+      </p>
+      <div className={colorIndicator} />
+    </div>
   );
 };
 
-const bar = style({
-  position: "relative",
-  height: "40px",
-  background:
-    "linear-gradient(90deg, rgba(2,200,36,1) 0%, rgba(9,230,121,1) 50%, rgba(0,255,200,1))"
-});
 export default Counter;

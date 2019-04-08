@@ -13,6 +13,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
     ingrName: "",
     ingrImg: ""
   });
+  const [error, setError] = useState("");
   const { dispatch }: any = useContext(Context);
 
   const setIng = (e: React.SyntheticEvent<HTMLInputElement>) => {
@@ -39,16 +40,18 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
         ingredient.ingrImg = image;
       })
       .then(() => {
+        setError("");
         dispatch({ type: "ADD_INGR", payload: ingredient });
       })
       .then(() => setIngredient({ ingrName: "", ingrImg: "" }))
       .catch(err => {
         console.error(err);
+        setError("Ingredient is not in a base, try with another search");
       });
   };
   return (
     <div className={container}>
-      <h1>Add Your Ingredients</h1>
+      <h1 className={h2}>Add Your Ingredients</h1>
       <form onSubmit={e => addIng(e)} className={form}>
         <input
           type="text"
@@ -56,7 +59,9 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
           onChange={e => setIng(e)}
           value={ingredient.ingrName}
         />
-        <label htmlFor="field">Type you ingredient Here</label>
+        <label htmlFor="field" className={error ? labelError : ""}>
+          {error ? error : "Type you ingredient Here"}
+        </label>
       </form>
 
       <button className={button} type="button" onClick={() => changeSteps("+")}>
@@ -65,6 +70,10 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
     </div>
   );
 };
+
+const labelError = style({
+  color: "red"
+});
 
 const container = style({
   display: "flex",
@@ -92,21 +101,8 @@ const form = style({
   }
 });
 
-// const input = style({
-//   background: "rgba(0,0,0,.3)",
-//   fontSize: "2rem",
-//   boxShadow: "rgba(0,0,0,.3)",
-//   border: "none",
-//   margin: " 10px 0",
-//   textAlign: "center",
-//   letterSpacing: "3px",
-//   color: "white",
-//   outline: "none",
-//   $nest: {
-//     "&:focus": {
-//       background: "rgba(0,0,0,.3)"
-//     }
-//   }
-// });
+const h2 = style({
+  padding: "0 10px"
+});
 
 export default AddIngredient;

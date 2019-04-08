@@ -15,16 +15,16 @@ const Timer = ({ ingredient }: any): JSX.Element => {
 const li = style({
   listStyleType: "none",
   position: "relative",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%,-50%)",
+  top: "0",
+  left: "0",
+  width: "300px",
   height: "300px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
   overflow: "hidden",
-  margin: "10px 0"
+  margin: "20px auto"
 });
 
 const h2 = style({
@@ -38,10 +38,9 @@ const h2 = style({
 });
 
 const img = style({
-  objectFit: "cover",
   position: "absolute",
-  margin: "0 auto",
-  maxWidth: "100%"
+  width: "100%",
+  maxWidth: "300px"
 });
 
 export default Timer;

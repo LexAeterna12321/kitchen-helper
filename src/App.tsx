@@ -11,6 +11,7 @@ export interface ITimer {
   ingrName: string;
   ingrImg: string;
   id: string;
+  color?: string;
 }
 
 interface IAppState {
@@ -65,11 +66,13 @@ const App = (): JSX.Element => {
   return (
     <Context.Provider value={{ dispatch, store }}>
       <div className="App">
-        <header className="App-header">
-          <p>Kitchen Helper</p>
-          <p>Precise Your Kitchen Timing </p>
-          <h2>Step {step}</h2>
-        </header>
+        {step === 4 ? null : (
+          <header className="App-header">
+            <p>Kitchen Helper</p>
+            <p>Precise Your Kitchen Timing </p>
+            <h2>Step {step}</h2>
+          </header>
+        )}
         {renderSteps()}
       </div>
     </Context.Provider>
