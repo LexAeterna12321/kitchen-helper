@@ -3,15 +3,12 @@ const Timer = require("tiny-timer").default;
 
 import { style } from "typestyle";
 
-const Counter = ({
-  time,
-  color,
-  ingrName
-}: {
+interface ICounterProps {
   time: number;
   color: string;
   ingrName: string;
-}): JSX.Element => {
+}
+const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
   const [timerStatus, setTimerStatus] = useState("");
   const [currTime, setCurrTime] = useState(0);
   const timer = new Timer();
@@ -39,7 +36,7 @@ const Counter = ({
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "3fr 1fr",
+        gridTemplateColumns: "4fr 1fr",
         gridGap: "15px",
         alignItems: "center"
       }}
@@ -48,7 +45,7 @@ const Counter = ({
         style={{
           color: color,
           justifySelf: "flex-start",
-          fontSize: "0.7rem"
+          fontSize: "0.8rem"
         }}
       >
         {ingrName} : {!timerStatus ? (currTime / 1000).toFixed(0) : timerStatus}

@@ -24,6 +24,7 @@ const colors = [
 const getRandColor = (): string => {
   return colors[Math.floor(Math.random() * colors.length - 1) + 1];
 };
+
 const AddTiming = (props: AddTimingProps) => {
   const { dispatch, store }: any = useContext(Context);
   const [time, setTime] = useState({ timeValue: "" });
@@ -49,7 +50,6 @@ const AddTiming = (props: AddTimingProps) => {
   };
   const deleteIngr = (e: any, id: string) => {
     const updatedTimers = store.timers.filter((t: any) => t.id !== id);
-    console.log(updatedTimers);
     dispatch({ type: "DEL_TIME", payload: updatedTimers });
   };
   return (
@@ -128,7 +128,6 @@ const form = style(
         border: "none",
         margin: " 10px 0",
         textAlign: "center",
-
         color: "white",
         $nest: {
           "&:focus": {

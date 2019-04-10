@@ -1,7 +1,7 @@
 import { IAction } from "../App";
-
+import { ITimer } from "../App";
 export const initialState = {
-  timers: <any>[]
+  timers: <ITimer | any>[]
 };
 
 export const appReducer = (state = initialState, action: IAction) => {

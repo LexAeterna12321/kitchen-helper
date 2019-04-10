@@ -8,6 +8,10 @@ const Dashboard = () => {
   const { store }: any = useContext(Context);
   let strokeWidth = 1;
   let zIndex = 10;
+  let storeSortedByTime = store.timers.sort((a: any, b: any) => {
+    return parseInt(a.time) > parseInt(b.time) ? 1 : -1;
+  });
+  console.log(storeSortedByTime);
   return (
     <div>
       <div
@@ -20,7 +24,7 @@ const Dashboard = () => {
           height: "auto"
         }}
       >
-        {store.timers.map((timer: any) => {
+        {storeSortedByTime.map((timer: any) => {
           return (
             <Bar
               key={timer.id}
@@ -42,7 +46,7 @@ const Dashboard = () => {
           height: "auto"
         }}
       >
-        {store.timers.map((timer: any) => {
+        {storeSortedByTime.map((timer: any) => {
           return (
             <Counter
               key={timer.id}

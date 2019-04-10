@@ -2,17 +2,13 @@ import React, { useEffect, useContext, useState } from "react";
 import { style } from "typestyle";
 const ProgressBar = require("progressbar.js");
 
-const Bar = ({
-  color,
-  time,
-  strokeWidth,
-  zIndex
-}: {
+interface IBarProps {
   color: string;
   time: number;
   strokeWidth: number;
   zIndex: number;
-}): JSX.Element => {
+}
+const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
   useEffect(() => {
     if (ref.current) {
       const circle = new ProgressBar.Circle(ref.current, {
@@ -32,22 +28,22 @@ const Bar = ({
       circle.animate(1, opts);
     }
   }, []);
+
   const ref: any = React.createRef();
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%,-50%)",
-        width: "90vmin",
-        height: "90vmin",
-        zIndex: zIndex
-      }}
-    />
-  );
+  const bar = style({
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%,-50%)",
+    width: "90vmin",
+    height: "90vmin",
+    zIndex: zIndex,
+    boxShadow: "0 0 3px 3px rgba(255,255,255,0.2)",
+    borderRadius: "50%"
+  });
+
+  return <div ref={ref} className={bar} />;
 };
 
 export default Bar;
