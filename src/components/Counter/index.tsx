@@ -38,7 +38,9 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
         display: "grid",
         gridTemplateColumns: "4fr 1fr",
         gridGap: "15px",
-        alignItems: "center"
+        margin: "0 auto",
+        alignItems: "center",
+        width: "40vmin"
       }}
     >
       <p
