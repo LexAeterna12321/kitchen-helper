@@ -12,7 +12,20 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
   const [timerStatus, setTimerStatus] = useState("");
   const [currTime, setCurrTime] = useState(0);
   const timer = new Timer();
-
+  const vibrationPattern = [
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300
+  ];
   useEffect(() => {
     // Timer handler
 
@@ -22,6 +35,7 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
     });
     timer.on("done", () => {
       setTimerStatus("DONE!");
+      window.navigator.vibrate(vibrationPattern);
     });
   }, []);
 
@@ -47,7 +61,7 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
         style={{
           color: color,
           justifySelf: "flex-start",
-          fontSize: "0.8rem"
+          fontSize: "3.4vmin"
         }}
       >
         {ingrName} : {!timerStatus ? (currTime / 1000).toFixed(0) : timerStatus}

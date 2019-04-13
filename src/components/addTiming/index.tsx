@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../App";
-
+import { ADD_TIME, DEL_TIME } from "../../store/types";
 import { style, media } from "typestyle";
 import Timer from "../dashboard/Timer";
 type AddTimingProps = {
@@ -46,11 +46,11 @@ const AddTiming = (props: AddTimingProps) => {
       return t;
     });
 
-    dispatch({ type: "ADD_TIME", payload: updatedTimers });
+    dispatch({ type: ADD_TIME, payload: updatedTimers });
   };
   const deleteIngr = (e: any, id: string) => {
     const updatedTimers = store.timers.filter((t: any) => t.id !== id);
-    dispatch({ type: "DEL_TIME", payload: updatedTimers });
+    dispatch({ type: DEL_TIME, payload: updatedTimers });
   };
   return (
     <div>
@@ -63,11 +63,12 @@ const AddTiming = (props: AddTimingProps) => {
             <form className={form} onSubmit={e => handleSubmit(e, id)}>
               <label htmlFor="time">Your Time:</label>
               <input
-                min="0"
+                min="1"
                 type="number"
                 name="time"
                 onChange={e => handleChange(e)}
                 defaultValue={timer.time}
+                style={{ background: "rgba(0,0,0,0.3)" }}
               />
               <button className={button} type="submit">
                 Add Time
@@ -156,6 +157,7 @@ export const button = style({
   margin: "20px",
   padding: "10px",
   textTransform: "uppercase",
+  cursor: "pointer",
   $nest: {
     "&--red": {
       color: "red"

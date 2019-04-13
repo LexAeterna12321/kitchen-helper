@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-const uuidv4 = require("uuid/v4");
 import { Context } from "../../App";
 import unsplash from "../../axiosConfig/unsplashAPI";
 import { button } from "../addTiming/index";
 import { style } from "typestyle";
+import { ADD_INGR } from "../../store/types";
+const uuidv4 = require("uuid/v4");
 type AddIngredientProps = {
   changeSteps: (sign: string) => void;
 };
@@ -41,7 +42,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
       })
       .then(() => {
         setError("");
-        dispatch({ type: "ADD_INGR", payload: ingredient });
+        dispatch({ type: ADD_INGR, payload: ingredient });
       })
       .then(() => setIngredient({ ingrName: "", ingrImg: "" }))
       .catch(err => {
