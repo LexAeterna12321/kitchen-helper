@@ -1,51 +1,34 @@
 import React, { useContext } from "react";
-// import Timer from "../dashboard/Timer";
+import { style } from "typestyle";
 import Counter from "../Counter";
 import Bar from "../Bar";
-import { Context } from "../../App";
+import { Context, ITimer } from "../../App";
 import { button } from "../addTiming";
+
 const Dashboard = ({ appReset }: { appReset: () => void }) => {
   const { store }: any = useContext(Context);
   let strokeWidth = 1;
   let zIndex = 10;
-  let storeSortedByTime = store.timers.sort((a: any, b: any) => {
+  let storeSortedByTime = store.timers.sort((a: ITimer, b: ITimer) => {
     return parseInt(a.time) > parseInt(b.time) ? 1 : -1;
   });
   console.log(store);
   return (
     <div>
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "50%",
-          height: "auto"
-        }}
-      >
-        {storeSortedByTime.map((timer: any) => {
+      <div className={container}>
+        {storeSortedByTime.map(({ id, time, color }: ITimer) => {
           return (
             <Bar
-              key={timer.id}
-              time={timer.time}
+              key={id}
+              time={time}
               strokeWidth={(strokeWidth += 2)}
               zIndex={zIndex--}
-              color={timer.color}
+              color={color}
             />
           );
         })}
       </div>
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          width: "50%",
-          height: "auto"
-        }}
-      >
+      <div className={container}>
         {storeSortedByTime.map((timer: any) => {
           return (
             <Counter
@@ -69,18 +52,23 @@ const Dashboard = ({ appReset }: { appReset: () => void }) => {
       >
         Go Back To Main Panel
       </button>
-      <p
-        style={{
-          position: "fixed",
-          bottom: "5%",
-          left: "50%",
-          transform: "translateX(-50%)"
-        }}
-      >
-        (When done, tap on the ingredient to stop vibrations)
-      </p>
+      <p className={p}>(When done, tap on the ingredient to stop vibrations)</p>
     </div>
   );
 };
 
+const container = style({
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%,-50%)",
+  width: "50%",
+  height: "auto"
+});
+const p = style({
+  position: "fixed",
+  bottom: "5%",
+  left: "50%",
+  transform: "translateX(-50%)"
+});
 export default Dashboard;

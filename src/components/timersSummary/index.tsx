@@ -10,7 +10,7 @@ const TimersSummary = (props: TimersSummaryProps) => {
 
   return (
     <div style={{ margin: "0 auto" }}>
-      <h1>TimersSummary</h1>
+      <h1>Timers Summary</h1>
       <TimerList />
       <button className={button} onClick={() => changeSteps("-")}>
         Prev Step

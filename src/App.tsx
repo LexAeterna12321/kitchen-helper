@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, SetStateAction } from "react";
 import AddIngredient from "./components/addIngredient";
 import AddTiming from "./components/addTiming";
 import TimersSummary from "./components/timersSummary";
@@ -46,7 +46,7 @@ const App = (): JSX.Element => {
         );
   };
 
-  const renderSteps = () => {
+  const renderSteps = (): JSX.Element => {
     switch (step) {
       case 1: {
         return <AddIngredient changeSteps={changeSteps} />;
@@ -73,7 +73,7 @@ const App = (): JSX.Element => {
           <header className="App-header">
             <p>Kitchen Helper</p>
             <p>Precise Your Kitchen Timing </p>
-            <h2>Step {step}</h2>
+            <h4>Step {step}</h4>
           </header>
         )}
         {renderSteps()}

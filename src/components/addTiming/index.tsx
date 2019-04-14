@@ -71,7 +71,7 @@ const AddTiming = (props: AddTimingProps) => {
                 style={{ background: "rgba(0,0,0,0.3)", outline: "none" }}
               />
               <button className={button} type="submit">
-                Add Time
+                Add / Change Time
               </button>
               <button
                 className={button}

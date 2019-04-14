@@ -3,7 +3,7 @@ import { style } from "typestyle";
 const ProgressBar = require("progressbar.js");
 
 interface IBarProps {
-  color: string;
+  color?: string;
   time: string;
   strokeWidth: number;
   zIndex: number;
@@ -29,7 +29,6 @@ const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
       };
 
       circle.animate(1, opts);
-      console.log(circle.value());
     }
   }, []);
 
