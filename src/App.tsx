@@ -29,6 +29,9 @@ const App = (): JSX.Element => {
   const [store, dispatch] = useReducer(appReducer, initialState);
   const [state, setState] = useState({ step: 1, timers: [] });
   const { step } = state;
+
+  const appReset = () => setState({ timers: [], step: 1 });
+
   const changeSteps = (sign: string): void => {
     sign === "+"
       ? setState(
@@ -55,7 +58,7 @@ const App = (): JSX.Element => {
         return <TimersSummary changeSteps={changeSteps} />;
       }
       case 4: {
-        return <Dashboard />;
+        return <Dashboard appReset={appReset} />;
       }
       default: {
         return <AddIngredient changeSteps={changeSteps} />;

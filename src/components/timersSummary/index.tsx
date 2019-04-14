@@ -7,6 +7,7 @@ type TimersSummaryProps = {
 };
 const TimersSummary = (props: TimersSummaryProps) => {
   const { changeSteps } = props;
+
   return (
     <div style={{ margin: "0 auto" }}>
       <h1>TimersSummary</h1>

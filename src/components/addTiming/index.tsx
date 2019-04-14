@@ -64,11 +64,11 @@ const AddTiming = (props: AddTimingProps) => {
               <label htmlFor="time">Your Time:</label>
               <input
                 min="1"
-                type="number"
+                type="time"
                 name="time"
                 onChange={e => handleChange(e)}
                 defaultValue={timer.time}
-                style={{ background: "rgba(0,0,0,0.3)" }}
+                style={{ background: "rgba(0,0,0,0.3)", outline: "none" }}
               />
               <button className={button} type="submit">
                 Add Time
@@ -122,8 +122,7 @@ const form = style(
         display: "block"
       },
       "& input": {
-        width: "50%",
-        background: "none",
+        width: "80%",
         fontSize: "2rem",
         boxShadow: "none",
         border: "none",

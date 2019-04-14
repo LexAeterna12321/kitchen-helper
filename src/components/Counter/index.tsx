@@ -4,15 +4,29 @@ const Timer = require("tiny-timer").default;
 import { style } from "typestyle";
 
 interface ICounterProps {
-  time: number;
+  time: string;
   color: string;
   ingrName: string;
 }
 const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
+  const timeBF = time.split(":");
+  const timeFormatted = parseInt(timeBF[0]) * 60 + parseInt(timeBF[1]);
   const [timerStatus, setTimerStatus] = useState("");
-  const [currTime, setCurrTime] = useState(0);
+  const [currTime, setCurrTime] = useState(timeFormatted);
   const timer = new Timer();
   const vibrationPattern = [
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
+    100,
+    300,
     100,
     300,
     100,
@@ -29,7 +43,7 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
   useEffect(() => {
     // Timer handler
 
-    timer.start(time * 1000, [1000]);
+    timer.start(timeFormatted * 1000, [1000]);
     timer.on("tick", (ms: number) => {
       setCurrTime(timer.time);
     });
@@ -45,6 +59,14 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
     width: "15px",
     height: "10px"
   });
+
+  const showFormattedTime = () => {
+    const timeBF = currTime / 1000;
+    const timeFormatted = `${Math.floor(timeBF / 60).toFixed(0)} min ${(
+      timeBF % 60
+    ).toFixed(0)} sec`;
+    return timeFormatted;
+  };
 
   return (
     <div
@@ -64,7 +86,7 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
           fontSize: "3.4vmin"
         }}
       >
-        {ingrName} : {!timerStatus ? (currTime / 1000).toFixed(0) : timerStatus}
+        {ingrName} : {!timerStatus ? showFormattedTime() : timerStatus}
       </p>
       <div className={colorIndicator} />
     </div>
