@@ -63,6 +63,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
         <label htmlFor="field" className={error ? labelError : ""}>
           {error ? error : "Type you ingredient Here"}
         </label>
+        <p>(Hit enter to confirm)</p>
       </form>
 
       <button className={button} type="button" onClick={() => changeSteps("+")}>

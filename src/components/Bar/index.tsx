@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { style } from "typestyle";
 const ProgressBar = require("progressbar.js");
 
@@ -9,6 +9,7 @@ interface IBarProps {
   zIndex: number;
 }
 const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
+  const [barState, setBarState] = useState("");
   useEffect(() => {
     const timeBF = time.split(":");
     const timeFormatted = parseInt(timeBF[0]) * 60 + parseInt(timeBF[1]);
@@ -28,6 +29,7 @@ const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
       };
 
       circle.animate(1, opts);
+      console.log(circle.value());
     }
   }, []);
 

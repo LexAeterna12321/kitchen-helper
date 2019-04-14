@@ -69,6 +69,16 @@ const Dashboard = ({ appReset }: { appReset: () => void }) => {
       >
         Go Back To Main Panel
       </button>
+      <p
+        style={{
+          position: "fixed",
+          bottom: "5%",
+          left: "50%",
+          transform: "translateX(-50%)"
+        }}
+      >
+        (When done, tap on the ingredient to stop vibrations)
+      </p>
     </div>
   );
 };

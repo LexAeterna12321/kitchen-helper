@@ -81,6 +81,7 @@ const AddTiming = (props: AddTimingProps) => {
               >
                 Delete Ingredient
               </button>
+              <p>(Hit enter or click the 'add time' button to confirm)</p>
             </form>
           </div>
         );
@@ -122,11 +123,11 @@ const form = style(
         display: "block"
       },
       "& input": {
-        width: "80%",
+        width: "50%",
         fontSize: "2rem",
         boxShadow: "none",
         border: "none",
-        margin: " 10px 0",
+        margin: "10px auto",
         textAlign: "center",
         color: "white",
         $nest: {
