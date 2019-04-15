@@ -11,11 +11,11 @@ interface IBarProps {
 const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
   const [barState, setBarState] = useState("");
   useEffect(() => {
-    const timeBF = time.split(":");
-    const timeFormatted = parseInt(timeBF[0]) * 60 + parseInt(timeBF[1]);
+    // const timeBF = time.split(":");
+    // const timeFormatted = parseInt(timeBF[0]) * 60 + parseInt(timeBF[1]);
     if (ref.current) {
       const circle = new ProgressBar.Circle(ref.current, {
-        duration: timeFormatted * 1000,
+        duration: parseInt(time) * 1000,
         easing: "linear",
         strokeWidth: strokeWidth,
         step: function(state: any, bar: any, attachment: any) {

@@ -8,7 +8,9 @@ const Timer = ({ ingredient }: any): JSX.Element => {
       <h2 className={h2}>
         {ingrName} {time ? `| ${time}` : ""}
       </h2>
-      <img className={img} src={ingrImg} alt="ingredient" />
+      <div className={imgWrapper}>
+        <img className={img} src={ingrImg} alt="ingredient" />
+      </div>
     </li>
   );
 };
@@ -36,11 +38,11 @@ const h2 = style({
   background: "rgba(0,0,0,0.2)",
   padding: "10px"
 });
-
-const img = style({
-  position: "absolute",
+const imgWrapper = style({
   width: "100%",
-  maxWidth: "300px"
+  position: "absolute"
 });
+
+const img = style({ width: "300px", height: "300px" });
 
 export default Timer;

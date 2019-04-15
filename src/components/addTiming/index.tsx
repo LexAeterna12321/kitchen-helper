@@ -160,7 +160,7 @@ export const button = style({
   cursor: "pointer",
   $nest: {
     "&--red": {
-      color: "red"
+      color: "#ff7777"
     }
   }
 });

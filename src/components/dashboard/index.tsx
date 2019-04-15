@@ -9,10 +9,17 @@ const Dashboard = ({ appReset }: { appReset: () => void }) => {
   const { store }: any = useContext(Context);
   let strokeWidth = 1;
   let zIndex = 10;
-  let storeSortedByTime = store.timers.sort((a: ITimer, b: ITimer) => {
+
+  // splitting time input from mins:secs to secs in order to pass it to timer functions
+  const timers = store.timers.map((timer: any) => {
+    const timeBF = timer.time.split(":");
+    const timeFormatted = parseFloat(timeBF[0]) * 60 + parseFloat(timeBF[1]);
+    return { ...timer, time: timeFormatted };
+  });
+
+  let storeSortedByTime = timers.sort((a: ITimer, b: ITimer) => {
     return parseInt(a.time) > parseInt(b.time) ? 1 : -1;
   });
-  console.log(store);
   return (
     <div>
       <div className={container}>

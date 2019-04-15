@@ -30,7 +30,10 @@ const App = (): JSX.Element => {
   const [state, setState] = useState({ step: 1, timers: [] });
   const { step } = state;
 
-  const appReset = () => setState({ timers: [], step: 1 });
+  const appReset = () => {
+    window.navigator.vibrate(0);
+    setState({ timers: [], step: 1 });
+  };
 
   const changeSteps = (sign: string): void => {
     sign === "+"
