@@ -43,6 +43,11 @@ const imgWrapper = style({
   position: "absolute"
 });
 
-const img = style({ width: "300px", height: "300px" });
+const img = style({
+  width: "300px",
+  height: "300px",
+  objectFit: "cover",
+  objectPosition: "center"
+});
 
 export default Timer;

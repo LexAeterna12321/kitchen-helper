@@ -55,6 +55,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
       <h1 className={h2}>Add Your Ingredients</h1>
       <form onSubmit={e => addIng(e)} className={form}>
         <input
+          autoFocus
           type="text"
           name="field"
           onChange={e => setIng(e)}

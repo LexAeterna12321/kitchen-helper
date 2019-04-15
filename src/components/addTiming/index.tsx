@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Context } from "../../App";
+import { Context, ITimer } from "../../App";
 import { ADD_TIME, DEL_TIME } from "../../store/types";
 import { style, media } from "typestyle";
 import Timer from "../dashboard/Timer";
@@ -38,7 +38,7 @@ const AddTiming = (props: AddTimingProps) => {
     id: string
   ) => {
     e.preventDefault();
-    const updatedTimers = store.timers.map((t: any) => {
+    const updatedTimers = store.timers.map((t: ITimer) => {
       if (t.id === id) {
         t.time = time.timeValue;
         t.color = getRandColor();
@@ -48,14 +48,14 @@ const AddTiming = (props: AddTimingProps) => {
 
     dispatch({ type: ADD_TIME, payload: updatedTimers });
   };
-  const deleteIngr = (e: any, id: string) => {
-    const updatedTimers = store.timers.filter((t: any) => t.id !== id);
+  const deleteIngr = (e: React.SyntheticEvent, id: string) => {
+    const updatedTimers = store.timers.filter((t: ITimer) => t.id !== id);
     dispatch({ type: DEL_TIME, payload: updatedTimers });
   };
   return (
     <div>
       <h1>Add Your Timings</h1>
-      {store.timers.map((timer: any) => {
+      {store.timers.map((timer: ITimer) => {
         const id = timer.id;
         return (
           <div className={container} key={id}>
@@ -63,7 +63,6 @@ const AddTiming = (props: AddTimingProps) => {
             <form className={form} onSubmit={e => handleSubmit(e, id)}>
               <label htmlFor="time">Your Time:</label>
               <input
-                min="1"
                 type="time"
                 name="time"
                 onChange={e => handleChange(e)}
