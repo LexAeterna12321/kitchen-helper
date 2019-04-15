@@ -1,13 +1,13 @@
 {
   "main.css": "/kitchen-helper/static/css/main.c073e9ee.chunk.css",
-  "main.js": "/kitchen-helper/static/js/main.e571c59b.chunk.js",
-  "main.js.map": "/kitchen-helper/static/js/main.e571c59b.chunk.js.map",
+  "main.js": "/kitchen-helper/static/js/main.acabe64b.chunk.js",
+  "main.js.map": "/kitchen-helper/static/js/main.acabe64b.chunk.js.map",
   "runtime~main.js": "/kitchen-helper/static/js/runtime~main.bd59581d.js",
   "runtime~main.js.map": "/kitchen-helper/static/js/runtime~main.bd59581d.js.map",
   "static/js/2.c93807f6.chunk.js": "/kitchen-helper/static/js/2.c93807f6.chunk.js",
   "static/js/2.c93807f6.chunk.js.map": "/kitchen-helper/static/js/2.c93807f6.chunk.js.map",
   "index.html": "/kitchen-helper/index.html",
-  "precache-manifest.1a8d2a1aacbca57382401618c1f9dc6b.js": "/kitchen-helper/precache-manifest.1a8d2a1aacbca57382401618c1f9dc6b.js",
+  "precache-manifest.7104b49f24c1ae89c583e42747ea1eb9.js": "/kitchen-helper/precache-manifest.7104b49f24c1ae89c583e42747ea1eb9.js",
   "service-worker.js": "/kitchen-helper/service-worker.js",
   "static/css/main.c073e9ee.chunk.css.map": "/kitchen-helper/static/css/main.c073e9ee.chunk.css.map"
 }
