@@ -57,8 +57,8 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
   const colorIndicator = style({
     margin: "0 10px",
     background: color,
-    width: "15px",
-    height: "10px"
+    width: "3.8vmin",
+    height: "3vmin"
   });
 
   const showFormattedTime = () => {
@@ -76,25 +76,26 @@ const Counter = ({ time, color, ingrName }: ICounterProps): JSX.Element => {
   const p = style({
     color: color,
     justifySelf: "flex-start",
-    fontSize: "3.4vmin"
+    fontSize: "3.8vmin",
+    textTransform: "capitalize"
   });
 
   return (
     <div className={counter} onClick={stopVibrations}>
+      <div className={colorIndicator} />
       <p className={p}>
         {ingrName} : {!timerStatus ? showFormattedTime() : timerStatus}
       </p>
-      <div className={colorIndicator} />
     </div>
   );
 };
 const counter = style({
   display: "grid",
-  gridTemplateColumns: "4fr 1fr",
+  gridTemplateColumns: "1fr 8fr",
   gridGap: "15px",
   margin: "10px auto",
-  alignItems: "center",
-  width: "40vmin"
+  alignItems: "baseline",
+  width: "50vmin"
 });
 
 export default Counter;

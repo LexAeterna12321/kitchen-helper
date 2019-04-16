@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context, ITimer } from "../../App";
 import { ADD_TIME, DEL_TIME } from "../../store/types";
 import { style, media } from "typestyle";
 import Timer from "../dashboard/Timer";
+
 type AddTimingProps = {
   changeSteps: (sign: string) => void;
 };
@@ -25,24 +26,38 @@ const getRandColor = (): string => {
   return colors[Math.floor(Math.random() * colors.length - 1) + 1];
 };
 
-const AddTiming = (props: AddTimingProps) => {
+const AddTiming = ({ changeSteps }: AddTimingProps) => {
   const { dispatch, store }: any = useContext(Context);
-  const [time, setTime] = useState({ timeValue: "" });
-  const { changeSteps } = props;
-
-  const handleChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    setTime({ timeValue: e.currentTarget.value });
-  };
-  const handleSubmit = (
-    e: React.SyntheticEvent<HTMLFormElement>,
+  const [error, setError] = useState("");
+  const handleChange = (
+    e: React.SyntheticEvent<HTMLInputElement>,
     id: string
   ) => {
-    e.preventDefault();
+    if (e.currentTarget.value == "00:00") {
+      setError("YOU CANNOT SET YOUR TIMERS WITH TIME: 00:00");
+      return;
+    } else {
+      setError("");
+    }
+    let color = getRandColor();
+
+    const sameColor = () => {
+      return store.timers.find((t: ITimer) => {
+        t.color === color;
+      });
+    };
+
     const updatedTimers = store.timers.map((t: ITimer) => {
       if (t.id === id) {
-        t.time = time.timeValue;
-        t.color = getRandColor();
+        t.time = e.currentTarget.value;
       }
+
+      if (!t.color) {
+        t.color = color;
+      }
+
+      sameColor ? (t.color = getRandColor()) : null;
+      sameColor();
       return t;
     });
 
@@ -52,44 +67,63 @@ const AddTiming = (props: AddTimingProps) => {
     const updatedTimers = store.timers.filter((t: ITimer) => t.id !== id);
     dispatch({ type: DEL_TIME, payload: updatedTimers });
   };
+  // after ingredients deletion checks if changingSteps is needed
+  if (store.timers.length === 0) changeSteps("-");
+
+  const validateTimers = () => {
+    return (
+      store.timers.every((timer: ITimer) => timer.time !== undefined) &&
+      store.timers.length !== 0
+    );
+  };
+
   return (
     <div>
       <h1>Add Your Timings</h1>
       {store.timers.map((timer: ITimer) => {
         const id = timer.id;
+
         return (
           <div className={container} key={id}>
             <Timer ingredient={{ ...timer }} />
-            <form className={form} onSubmit={e => handleSubmit(e, id)}>
+            <form className={form}>
               <label htmlFor="time">Your Time:</label>
               <input
                 type="time"
                 name="time"
-                onChange={e => handleChange(e)}
+                onChange={e => handleChange(e, id)}
                 defaultValue={timer.time}
                 style={{ background: "rgba(0,0,0,0.3)", outline: "none" }}
               />
-              <button className={button} type="submit">
-                Add / Change Time
-              </button>
               <button
                 className={button}
-                style={{ color: "red" }}
+                style={{ color: "#ff7777" }}
                 type="button"
                 onClick={e => deleteIngr(e, id)}
               >
                 Delete Ingredient
               </button>
-              <p>(Hit enter or click the 'add time' button to confirm)</p>
+              <p>(Hit enter or click the 'add time' button to confirm) </p>
             </form>
           </div>
         );
       })}
+      {error ? (
+        <p className={p} style={{ color: "#ff7777" }}>
+          {error}
+        </p>
+      ) : (
+        <p className={p} />
+      )}
       <div className={buttons}>
         <button className={button} onClick={() => changeSteps("-")}>
           Prev Step
         </button>
-        <button className={button} onClick={() => changeSteps("+")}>
+        <button
+          disabled={!validateTimers()}
+          className={validateTimers() ? button : buttonDisabled}
+          onClick={() => changeSteps("+")}
+        >
           Next Step
         </button>
       </div>
@@ -97,6 +131,10 @@ const AddTiming = (props: AddTimingProps) => {
   );
 };
 
+const p = style({
+  height: "40px",
+  padding: "20px 0"
+});
 const container = style({
   display: "flex",
   flexDirection: "column",
@@ -110,6 +148,7 @@ const form = style(
     display: "flex",
     flexDirection: "column",
     maxWidth: "90vw",
+    minWidth: "50vw",
     margin: "0 auto",
     alignItems: "center",
     justifyContent: "center",
@@ -152,16 +191,21 @@ export const button = style({
   boxShadow: "none",
   border: "none",
   background: "lightblue",
-  color: "white",
+  color: "#353b48",
   margin: "20px",
   padding: "10px",
   textTransform: "uppercase",
-  cursor: "pointer",
-  $nest: {
-    "&--red": {
-      color: "#ff7777"
-    }
-  }
+  cursor: "pointer"
+});
+const buttonDisabled = style({
+  boxShadow: "none",
+  border: "none",
+  background: "lightgrey",
+  color: "#353b48",
+  margin: "20px",
+  padding: "10px",
+  textTransform: "uppercase",
+  cursor: "default"
 });
 
 export default AddTiming;

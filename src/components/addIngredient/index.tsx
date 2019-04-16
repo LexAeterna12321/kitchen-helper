@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../../App";
 import unsplash from "../../axiosConfig/unsplashAPI";
-import { button } from "../addTiming/index";
-import { style } from "typestyle";
+import { style, keyframes } from "typestyle";
 import { ADD_INGR } from "../../store/types";
 const uuidv4 = require("uuid/v4");
+
 type AddIngredientProps = {
   changeSteps: (sign: string) => void;
 };
@@ -14,10 +14,12 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
     ingrName: "",
     ingrImg: ""
   });
+  const { store, dispatch }: any = useContext(Context);
   const [error, setError] = useState("");
-  const { dispatch }: any = useContext(Context);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const setIng = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    setImgLoaded(false);
     setIngredient({ ...ingredient, ingrName: e.currentTarget.value });
   };
 
@@ -34,20 +36,28 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
 
   const addIng = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!ingredient.ingrName) {
+      setImgLoaded(false);
+      setError("You have to type your ingredient first");
+      return;
+    } else if (store.timers.length > 5) {
+      setError("You have reached maximum amount of ingredients");
+      return;
+    }
     ingredient.id = uuidv4();
-
     fetchIngrImg(ingredient.ingrName)
       .then(image => {
         ingredient.ingrImg = image;
       })
       .then(() => {
         setError("");
+        setImgLoaded(true);
         dispatch({ type: ADD_INGR, payload: ingredient });
       })
       .then(() => setIngredient({ ingrName: "", ingrImg: "" }))
-      .catch(err => {
-        console.error(err);
+      .catch(() => {
         setError("Ingredient is not in a base, try with another search");
+        setImgLoaded(false);
       });
   };
   return (
@@ -55,6 +65,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
       <h1 className={h2}>Add Your Ingredients</h1>
       <form onSubmit={e => addIng(e)} className={form}>
         <input
+          // disabled={imgLoaded ? false : true}
           autoFocus
           type="text"
           name="field"
@@ -62,12 +73,31 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
           value={ingredient.ingrName}
         />
         <label htmlFor="field" className={error ? labelError : ""}>
-          {error ? error : "Type your ingredient Here"}
+          {error ? error : "Type your ingredient Here (MAX: 6)"}
         </label>
         <p>(Hit enter to confirm)</p>
+        <button
+          type="submit"
+          className={
+            imgLoaded
+              ? animatedButton
+              : button({ background: "lightblue", cursor: "pointer" })
+          }
+        >
+          {imgLoaded ? "Ingredient Added" : "Add Ingredient"}
+        </button>
       </form>
 
-      <button className={button} type="button" onClick={() => changeSteps("+")}>
+      <button
+        className={
+          store.timers.length !== 0
+            ? button({ background: "lightblue", cursor: "pointer" })
+            : button({ background: "lightgrey", cursor: "default" })
+        }
+        disabled={store.timers.length !== 0 ? false : true}
+        type="button"
+        onClick={() => changeSteps("+")}
+      >
         Next Step
       </button>
     </div>
@@ -104,8 +134,48 @@ const form = style({
   }
 });
 
+const button: any = ({ background, cursor }: any) => {
+  return style({
+    boxShadow: "none",
+    border: "none",
+    background,
+    color: "#353b48",
+    margin: "20px",
+    padding: "10px",
+    textTransform: "uppercase",
+    cursor,
+    opacity: 0.8,
+    $nest: {
+      "&:hover": {
+        opacity: 1
+      }
+    }
+  });
+};
+
 const h2 = style({
   padding: "0 10px"
+});
+
+const changingButtonAnim = keyframes({
+  "0%": { background: "lightblue" },
+  "50%": { background: "#33ba57", opacity: 0.8 },
+  "100%": { background: "#33cc57", opacity: 1 }
+});
+
+const animatedButton = style({
+  boxShadow: "none",
+  border: "none",
+  background: "lightblue",
+  color: "#353b48",
+  margin: "20px",
+  padding: "10px",
+  textTransform: "uppercase",
+  cursor: "pointer",
+  animationName: changingButtonAnim,
+  animationDuration: "1.5s",
+  animationIterationCount: "1",
+  animationFillMode: "both"
 });
 
 export default AddIngredient;
