@@ -4,26 +4,28 @@ import unsplash from "../../axiosConfig/unsplashAPI";
 import { style, keyframes } from "typestyle";
 import { ADD_INGR } from "../../store/types";
 const uuidv4 = require("uuid/v4");
-
+import Loader from "../Loader";
 type AddIngredientProps = {
   changeSteps: (sign: string) => void;
 };
-
+const inputRef: any = React.createRef();
 const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
   const [ingredient, setIngredient] = useState<any>({
     ingrName: "",
     ingrImg: ""
   });
+
   const { store, dispatch }: any = useContext(Context);
   const [error, setError] = useState("");
   const [imgLoaded, setImgLoaded] = useState(false);
-
+  const [isFetching, setIsFetching] = useState(false);
   const setIng = (e: React.SyntheticEvent<HTMLInputElement>) => {
     setImgLoaded(false);
     setIngredient({ ...ingredient, ingrName: e.currentTarget.value });
   };
 
   const fetchIngrImg = async (ingrImg: string) => {
+    setIsFetching(true);
     const raw = await unsplash.get(`/search/photos`, {
       params: {
         query: ingrImg
@@ -45,6 +47,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
       return;
     }
     ingredient.id = uuidv4();
+
     fetchIngrImg(ingredient.ingrName)
       .then(image => {
         ingredient.ingrImg = image;
@@ -54,18 +57,34 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
         setImgLoaded(true);
         dispatch({ type: ADD_INGR, payload: ingredient });
       })
-      .then(() => setIngredient({ ingrName: "", ingrImg: "" }))
+      .then(() => {
+        setIsFetching(false);
+        inputRef.current.focus();
+        setIngredient({ ingrName: "", ingrImg: "" });
+      })
       .catch(() => {
         setError("Ingredient is not in a base, try with another search");
         setImgLoaded(false);
+        setIsFetching(false);
+        inputRef.current.focus();
       });
   };
+  const buttonFetchingChanges = () => {
+    if (isFetching)
+      return (
+        <Loader type="ThreeDots" color="#44bd32" height="15" width="130" />
+      );
+    else if (imgLoaded) return "Ingredient Added";
+    else return "Add Ingredient";
+  };
+
   return (
     <div className={container}>
       <h1 className={h2}>Add Your Ingredients</h1>
       <form onSubmit={e => addIng(e)} className={form}>
         <input
-          // disabled={imgLoaded ? false : true}
+          ref={inputRef}
+          disabled={isFetching ? true : false}
           autoFocus
           type="text"
           name="field"
@@ -75,7 +94,9 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
         <label htmlFor="field" className={error ? labelError : ""}>
           {error ? error : "Type your ingredient Here (MAX: 6)"}
         </label>
-        <p>(Hit enter to confirm)</p>
+        <p>
+          Added ingredients: <span>{store.timers.length}</span>
+        </p>
         <button
           type="submit"
           className={
@@ -84,7 +105,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
               : button({ background: "lightblue", cursor: "pointer" })
           }
         >
-          {imgLoaded ? "Ingredient Added" : "Add Ingredient"}
+          {buttonFetchingChanges()}
         </button>
       </form>
 

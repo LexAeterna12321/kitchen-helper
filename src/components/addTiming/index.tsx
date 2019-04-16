@@ -8,18 +8,12 @@ type AddTimingProps = {
   changeSteps: (sign: string) => void;
 };
 const colors = [
-  "#00a8ff",
-  "#9c88ff",
-  "#fbc531",
-  "#4cd137",
-  "#e84118",
-  "#f5f6fa",
-  "#0097e6",
-  "#8c7ae6",
-  "#e1b12c",
-  "#e1b12c",
-  "#44bd32",
-  "#40739e"
+  "#f6b93b",
+  "#b71540",
+  "#6a89cc",
+  "#82ccdd",
+  "#38ada9",
+  "#808e9b"
 ];
 
 const getRandColor = (): string => {
@@ -39,25 +33,26 @@ const AddTiming = ({ changeSteps }: AddTimingProps) => {
     } else {
       setError("");
     }
-    let color = getRandColor();
 
-    const sameColor = () => {
-      return store.timers.find((t: ITimer) => {
-        t.color === color;
+    const uniqueColor = (): any => {
+      const colorA = getRandColor();
+      const alreadyPicked = store.timers.some((timer: any) => {
+        return timer.color === colorA;
       });
+      if (!alreadyPicked) {
+        return colorA;
+      } else {
+        return uniqueColor();
+      }
     };
 
     const updatedTimers = store.timers.map((t: ITimer) => {
       if (t.id === id) {
         t.time = e.currentTarget.value;
       }
-
       if (!t.color) {
-        t.color = color;
+        t.color = uniqueColor();
       }
-
-      sameColor ? (t.color = getRandColor()) : null;
-      sameColor();
       return t;
     });
 
@@ -103,7 +98,6 @@ const AddTiming = ({ changeSteps }: AddTimingProps) => {
               >
                 Delete Ingredient
               </button>
-              <p>(Hit enter or click the 'add time' button to confirm) </p>
             </form>
           </div>
         );
@@ -115,6 +109,7 @@ const AddTiming = ({ changeSteps }: AddTimingProps) => {
       ) : (
         <p className={p} />
       )}
+      <p>In order to proceed you have to fill all your timers</p>
       <div className={buttons}>
         <button className={button} onClick={() => changeSteps("-")}>
           Prev Step
