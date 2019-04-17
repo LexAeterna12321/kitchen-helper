@@ -33,7 +33,11 @@ const TimersSummary = (props: TimersSummaryProps) => {
       <button className={button} onClick={() => changeSteps("-")}>
         Prev Step
       </button>
-      <button className={button} onClick={checkForTimers}>
+      <button
+        className={button}
+        style={{ background: "#78e08f" }}
+        onClick={checkForTimers}
+      >
         Let's Cook
       </button>
       {error ? <h3 style={{ color: "#ff7777" }}>{error}</h3> : null}

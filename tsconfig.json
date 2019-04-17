@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "*": ["types/*"]
-    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types/"
+    ],
     "target": "es2016",
     "jsx": "preserve",
     "module": "esnext",

@@ -109,7 +109,7 @@ const AddTiming = ({ changeSteps }: AddTimingProps) => {
       ) : (
         <p className={p} />
       )}
-      <p>In order to proceed you have to fill all your timers</p>
+      <p className={p}>In order to proceed you have to fill all your timers</p>
       <div className={buttons}>
         <button className={button} onClick={() => changeSteps("-")}>
           Prev Step
@@ -128,7 +128,8 @@ const AddTiming = ({ changeSteps }: AddTimingProps) => {
 
 const p = style({
   height: "40px",
-  padding: "20px 0"
+  padding: "20px 0",
+  margin: "20px 10px"
 });
 const container = style({
   display: "flex",
@@ -156,7 +157,7 @@ const form = style(
         display: "block"
       },
       "& input": {
-        width: "50%",
+        width: "75%",
         fontSize: "2rem",
         boxShadow: "none",
         border: "none",
