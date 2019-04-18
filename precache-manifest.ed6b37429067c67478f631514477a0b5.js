@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "962b385fbbd36af50284",
+    "revision": "c23ac63b0698c309e92f",
     "url": "/kitchen-helper/static/css/main.c073e9ee.chunk.css"
   },
   {
-    "revision": "962b385fbbd36af50284",
-    "url": "/kitchen-helper/static/js/main.79cbab80.chunk.js"
+    "revision": "c23ac63b0698c309e92f",
+    "url": "/kitchen-helper/static/js/main.9cc22b3c.chunk.js"
   },
   {
     "revision": "3f7d3d6a362c46a607d6",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/kitchen-helper/static/js/2.09ba6bf7.chunk.js"
   },
   {
-    "revision": "7c982c460e0287d6df91d6784148464f",
+    "revision": "6b31b5d3942babc18aa61717d028c0e0",
     "url": "/kitchen-helper/index.html"
   }
 ];
