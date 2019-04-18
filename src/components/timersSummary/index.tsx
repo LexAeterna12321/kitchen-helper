@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import TimerList from "../dashboard/TimerList";
-import { button } from "../addTiming/index";
+import TimerList from "../Timers/TimerList";
+import { button } from "../Button";
 import { Context, ITimer } from "../../App";
 type TimersSummaryProps = {
   changeSteps: (sign: string) => void;

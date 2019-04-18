@@ -3,8 +3,7 @@ import { style } from "typestyle";
 import Counter from "../Counter";
 import Bar from "../Bar";
 import { Context, ITimer } from "../../App";
-import { button } from "../addTiming";
-
+import { button } from "../Button";
 const Dashboard = ({ appReset }: { appReset: () => void }) => {
   const { store }: any = useContext(Context);
   let strokeWidth = 1;
@@ -59,7 +58,9 @@ const Dashboard = ({ appReset }: { appReset: () => void }) => {
       >
         Go Back To Main Panel
       </button>
-      <p className={p}>(When done, tap on the ingredient to stop vibrations)</p>
+      <p className={p}>
+        (When done, tap on the ingredient label to stop vibrations)
+      </p>
     </div>
   );
 };

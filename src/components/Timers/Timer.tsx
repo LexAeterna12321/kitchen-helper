@@ -5,9 +5,9 @@ const Timer = ({ ingredient }: any): JSX.Element => {
   const { ingrName, ingrImg, time } = ingredient;
   return (
     <li className={li}>
-      <h2 className={h2}>
+      <span className={span}>
         {ingrName} {time ? `| ${time}` : ""}
-      </h2>
+      </span>
       <div className={imgWrapper}>
         <img className={img} src={ingrImg} alt="ingredient" />
       </div>
@@ -29,7 +29,7 @@ const li = style({
   margin: "20px auto"
 });
 
-const h2 = style({
+const span = style({
   fontSize: "2rem",
   letterSpacing: "2px",
   zIndex: 2,

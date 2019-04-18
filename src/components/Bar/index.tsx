@@ -9,10 +9,7 @@ interface IBarProps {
   zIndex: number;
 }
 const Bar = ({ color, time, strokeWidth, zIndex }: IBarProps): JSX.Element => {
-  const [barState, setBarState] = useState("");
   useEffect(() => {
-    // const timeBF = time.split(":");
-    // const timeFormatted = parseInt(timeBF[0]) * 60 + parseInt(timeBF[1]);
     if (ref.current) {
       const circle = new ProgressBar.Circle(ref.current, {
         duration: parseInt(time) * 1000,

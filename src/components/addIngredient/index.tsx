@@ -5,6 +5,7 @@ import { style, keyframes } from "typestyle";
 import { ADD_INGR } from "../../store/types";
 const uuidv4 = require("uuid/v4");
 import Loader from "../Loader";
+import Button from "../Button";
 type AddIngredientProps = {
   changeSteps: (sign: string) => void;
 };
@@ -14,7 +15,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
     ingrName: "",
     ingrImg: ""
   });
-
+  const { ingrName } = ingredient;
   const { store, dispatch }: any = useContext(Context);
   const [error, setError] = useState("");
   const [imgLoaded, setImgLoaded] = useState(false);
@@ -38,7 +39,8 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
 
   const addIng = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!ingredient.ingrName) {
+
+    if (!ingrName) {
       setImgLoaded(false);
       setError("You have to type your ingredient first");
       return;
@@ -89,7 +91,7 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
           type="text"
           name="field"
           onChange={e => setIng(e)}
-          value={ingredient.ingrName}
+          value={ingrName}
         />
         <label htmlFor="field" className={error ? labelError : ""}>
           {error ? error : "Type your ingredient Here (MAX: 6)"}
@@ -97,30 +99,23 @@ const AddIngredient = ({ changeSteps }: AddIngredientProps): JSX.Element => {
         <p>
           Added ingredients: <span>{store.timers.length}</span>
         </p>
-        <button
-          type="submit"
-          className={
-            imgLoaded
-              ? animatedButton
-              : button({ background: "lightblue", cursor: "pointer" })
-          }
-        >
-          {buttonFetchingChanges()}
-        </button>
+        <Button
+          value={buttonFetchingChanges()}
+          disabled={!imgLoaded ? true : false}
+          animated={true}
+          ingrName={ingrName}
+        />
       </form>
-
-      <button
-        className={
-          store.timers.length !== 0
-            ? button({ background: "lightblue", cursor: "pointer" })
-            : button({ background: "lightgrey", cursor: "default" })
-        }
-        disabled={store.timers.length !== 0 ? false : true}
-        type="button"
-        onClick={() => changeSteps("+")}
-      >
-        Next Step
-      </button>
+      {store.timers.length !== 0 ? (
+        <Button value="Next step" changeSteps={changeSteps} step="+" />
+      ) : (
+        <Button
+          value="Next step"
+          changeSteps={changeSteps}
+          step="+"
+          disabled={true}
+        />
+      )}
     </div>
   );
 };
@@ -154,25 +149,6 @@ const form = style({
     }
   }
 });
-
-const button: any = ({ background, cursor }: any) => {
-  return style({
-    boxShadow: "none",
-    border: "none",
-    background,
-    color: "#353b48",
-    margin: "20px",
-    padding: "10px",
-    textTransform: "uppercase",
-    cursor,
-    opacity: 0.8,
-    $nest: {
-      "&:hover": {
-        opacity: 1
-      }
-    }
-  });
-};
 
 const h2 = style({
   padding: "0 10px"

@@ -1,8 +1,8 @@
-import React, { useState, useReducer, SetStateAction } from "react";
-import AddIngredient from "./components/addIngredient";
-import AddTiming from "./components/addTiming";
-import TimersSummary from "./components/timersSummary";
-import Dashboard from "./components/dashboard";
+import React, { useState, useReducer } from "react";
+import AddIngredient from "./components/AddIngredient";
+import AddTiming from "./components/AddTiming";
+import TimersSummary from "./components/TimersSummary";
+import Dashboard from "./components/Dashboard";
 import { appReducer, initialState } from "./store/appReducer";
 import "./App.css";
 
